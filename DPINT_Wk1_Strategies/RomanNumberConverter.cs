@@ -33,10 +33,11 @@ namespace DPINT_Wk1_Strategies
             throw new ArgumentOutOfRangeException("something bad happened");
         }
 
-        public int ToNumerical(string text)
+
+        public int ToNumerical(string value)
         {
             int totalValue = 0, prevValue = 0;
-            foreach (var c in text)
+            foreach (var c in value)
             {
                 if (!_romanMap.ContainsKey(c))
                     return 0;

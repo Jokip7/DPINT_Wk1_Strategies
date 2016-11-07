@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace DPINT_Wk1_Strategies
 
         private INumberConverter _fromConverter;
         private INumberConverter _toConverter;
+        private ConverterFactory _converterFactory;
 
         public string FromText
         {
@@ -47,7 +49,8 @@ namespace DPINT_Wk1_Strategies
             set
             {
                 _fromConverterName = value;
-                RaisePropertyChanged("FromConverterName");
+                _fromConverter = _converterFactory.getConverter(_fromConverterName);
+                RaisePropertyChanged("FromText");
                 this.ConvertNumbers();
             }
         }
@@ -59,7 +62,8 @@ namespace DPINT_Wk1_Strategies
             set
             {
                 _toConverterName = value;
-                RaisePropertyChanged("ToConverterName");
+                _toConverter = _converterFactory.getConverter(_toConverterName); 
+                RaisePropertyChanged("ToText");
                 this.ConvertNumbers();
             }
         }
@@ -69,16 +73,16 @@ namespace DPINT_Wk1_Strategies
 
         public ValueConverterViewModel()
         {
-            ConverterNames = new ObservableCollection<string>();
-            ConverterNames.Add("Numerical");
-            ConverterNames.Add("Binary");
-            ConverterNames.Add("Hexadecimal");
-            ConverterNames.Add("Roman");
+            _converterFactory = new ConverterFactory();
+            ConverterNames = new ObservableCollection<string>(_converterFactory.ConverterNames);
+
+            _fromConverter = _converterFactory.getConverter("Numerical");
+            _fromConverterName = "Numerical";
+            _toConverter = _converterFactory.getConverter("Numerical");
+            _toConverterName = "Numerical";
 
             FromText = "0";
             ToText = "0";
-            FromConverterName = "Numerical";
-            ToConverterName = "Numerical";
 
             ConvertCommand = new RelayCommand(ConvertNumbers);
         }

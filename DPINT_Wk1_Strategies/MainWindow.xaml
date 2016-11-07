@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DPINT_Wk1_Strategies"
         mc:Ignorable="d"
-        Title="MainWindow" Height="152.063" Width="455.34">
+        Title="Number Converter" Height="152.063" Width="455.34"
+        ResizeMode="CanMinimize">
     <Window.DataContext>
         <local:ValueConverterViewModel />
     </Window.DataContext>
